@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image13]: ./examples/HOG_3.png
 [image14]: ./examples/window_1.png
 [image15]: ./examples/window_2.png
-[image16]: ./examples/window_3.png
+[image16]: ./examples/window_3png.png
 [image17]: ./examples/window_4.png
 [image18]: ./examples/heatmap_1.png
 [image19]: ./examples/heatmap_2.png
@@ -49,6 +49,14 @@ The goals / steps of this project are the following:
 ###Writeup / README  
 
 I have referred the code provided in the lessons.
+The submission contains the following:
+
+* README.md
+* example images
+* output_project.mp4
+* VehicleDetect.ipynb
+* VehicleDetect.html
+* train_model.p
 
 ###Feature experimentation: Histogram of Oriented Gradients (HOG) & Color Histogram.
 
@@ -98,9 +106,7 @@ This is is used separately for each channel if YCbCr converted image.
 The following images show the HOG features of a few car images.
 
 ![alt text][image11]
-
 ![alt text][image12]
-
 ![alt text][image13]
 
 I am using the following parameters for extracting hog features:
