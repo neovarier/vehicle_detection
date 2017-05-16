@@ -63,9 +63,9 @@ The submission contains the following:
 I read the vehicle and non-vehicle images.
 I explored the data set to get the following information:
 
-* No. of car images
-* No. of not-car images
-* Image resolution image
+* No. of car images:  8792
+* No. of non-car images:  8968
+* Image resolution:  (64, 64, 3)
 
 I selected few images of each class for experimentation.
 
@@ -83,7 +83,7 @@ The following images show the color space graph:
 
 I checked the color histogram of car and non-car images with YCrCb color space.
 The histogram plots augment the feature set to classify the car and non-car images
-I am using np.histogram() function to store the color histogram features in color_hist() function in cell no. 2
+I am using np.histogram() function to store the color histogram features in color_hist() function in cell no. 2.
 I am using 16 bins for histogram of each channel of YCrCb converted images.
 The following are the examples histogram plots:
 
@@ -93,7 +93,7 @@ The following are the examples histogram plots:
 
 Also checked with spatial binning feature.
 As explained in the lesson, resized images to (16x16) is still recognizable for the human eye.
-Using cv2.resize().ravel(), I am extracting the spatial binning feature in bin_spatial() in cell no. 2
+Using cv2.resize().ravel(), I am extracting the spatial binning feature in bin_spatial() in cell no. 2.
 The relavent features are still retained in this feature which could be used for classification.
 
 ![alt text][image7] ![alt text][image8]
@@ -107,7 +107,7 @@ The following is the spatial bin feature vector:
 HOG feature helps in giving a signature for the shape of objects which are color and scale invariant.
 As explained in the lessons, it definitely helps in classfying the shapes of car.
 I used the hog() function from skimage.feature to extract hog features.
-The hog features are getting extracted in the function get_hog_features() in cell no. 2
+The hog features are getting extracted in the function get_hog_features() in cell no. 2.
 This is is used separately for each channel if YCbCr converted image.
 The following images show the HOG features of a few car images.
 
@@ -116,9 +116,10 @@ The following images show the HOG features of a few car images.
 ![alt text][image13]
 
 I am using the following parameters for extracting hog features:
-orient = 9
-pix_per_cell = 8 
-cell_per_block = 2 
+
+* orient = 9
+* pix_per_cell = 8 
+* cell_per_block = 2 
 
 ###Classification method
 
@@ -244,7 +245,7 @@ With the above steps I was facing the following problems:
 * There were a few false positives.
 
 To smooth out the bounding boxes, I used bounding boxes computed from the sliding window approach for the past 15 images, applied heat map on them to get the smooth bounding box for the current frame. This logic is carried out in cell no. 12 as part of process_image().
-I am using collection.deque to store the bounding boxes for the past 15 frames
+I am using collection.deque to store the bounding boxes for the past 15 frames.
 I got this suggestion from this [blog post](http://jeremyshannon.com/2017/03/17/udacity-sdcnd-vehicle-detection.html)
 
 * No. of past frames = 15
