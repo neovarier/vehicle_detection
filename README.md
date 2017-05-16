@@ -15,15 +15,26 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/color_space_explore.jpg
-[image3]: ./examples/spatial_bin.jpg
-[image4]: ./examples/color histogram.jpg
-[image5]: ./examples/HOG.png
-[image6]: ./examples/sliding_window.png
-[image7]: ./examples/heat_bbox.png
-[image8]: ./examples/false_positives.png
-[image9]: ./examples/label.png
+[image1]: ./examples/1.png
+[image2]: ./examples/YCrCb_1.png
+[image3]: ./examples/2.png
+[image4]: ./examples/YCrCb_2.png
+[image5]: ./examples/3.png
+[image6]: ./examples/YCrCb_3.png
+[image7]: ./examples/car.png
+[image8]: ./examples/car_resize.png
+[image9]: ./examples/spatial_bin.jpg
+[image10]: ./examples/color_histogram.jpg
+[image11]: ./examples/HOG.png
+[image12]: ./examples/HOG_2.png
+[image13]: ./examples/window_1.png
+[image14]: ./examples/window_2.png
+[image15]: ./examples/heatmap_1.png
+[image16]: ./examples/heatmap_2.png
+[image17]: ./examples/label_1.png
+[image18]: ./examples/label_2.png
+[image19]: ./examples/test1.png
+[image20]: ./examples/test2.png
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -39,57 +50,72 @@ I have referred the code provided in the lessons.
 ###Feature experimentation: Histogram of Oriented Gradients (HOG) & Color Histogram
 I read the vehicle and non-vehicle images.
 I explored the data set to get the following information:
+
 * No. of car images
 * No. of not-car images
 * Image resolution image
 
-Randomly selected 5 of each class for experimentation.
+I selected few selected few images of each class for experimentation.
 
 I tried various color spaces to see which one differentiates the colors of the car from the non-cars.
 The color space of YCrCb turned out to fairly separate out space for the car colors.
 The following images show the color space graph:
 
+![alt text][image1] ![alt text][image2]
+![alt text][image3] ![alt text][image4]
+![alt text][image5] ![alt text][image6]
+
 I checked the color histogram of car and non-car images with YCrCb color space.
 The histogram plots augment the feature set to classify the car and non-car images
-I am using np.histogram() function to store the color histogram features in color_hist() function in cell no.
-I am X bins for histogram of each channel of YCrCB converted images.
+I am using np.histogram() function to store the color histogram features in color_hist() function in cell no. 2
+I am using 16 bins for histogram of each channel of YCrCb converted images.
 The following are the examples histogram plots:
 
+![alt text][image10]
 
 Also checked with spatial binning feature.
 As explained in the lesson, resized images to (32x32) is still recognizable for the human eye.
-Using cv2.resize().ravel(), I am extracting the spatial binning feature in bin_spatial() in cell no.
+Using cv2.resize().ravel(), I am extracting the spatial binning feature in bin_spatial() in cell no. 2
 The relavent features are still retained in this feature which could be used for classification.
 
+![alt text][image7] ![alt text][image8]
+
+The following is the spatial bin feature vector:
+
+![alt text][image9]
 
 HOG feature helps in giving a signature for the shape of objects which are color and scale invariant.
 As explained in the lessons, it definitely helps in classfying the shapes of car.
 I used the scimage.hop() function to extract hog features.
-The hog features are getting extracted in the function get_hog_features() in cell no.
+The hog features are getting extracted in the function get_hog_features() in cell no. 2
 This is is used separately for each channel if YCbCr converted image.
-The following images show the HOG features of a few car and non-car images.
+The following images show the HOG features of a few car images.
 
+![alt text][image11]
+
+![alt text][image12]
 
 I am using the following parameters for extracting hog features:
-orient = 
-pix_per_cell = 
-cell_per_block = 
-
+orient = 9
+pix_per_cell = 8 
+cell_per_block = 2 
 
 ###Classification method
 
 For classification the following steps are executed:
+
 * Extract features from dataset
 * Normalize the feature set
 * Split the dataset for training and testing and randomly shuffling
 * Training the classifier and find the test accuracy with test set
 
-Using the following extracted feature, I concatenate them into a single array using np.hstack():
+The following features are extracted using a single function extract_features in cell no. 3. I concatenate them into a single array using np.hstack():
+
 * Spatial binning
 * Color Histogram
 * HOG feature
 
-Since each feature would be having different scales, I normalized them using StandardScaler library of sklearn.
+Since each feature would be having different scales or range (max,min), I normalized them using StandardScaler library of sklearn.preprocessing.
 The normalization is covered in find_cars() for inference and extract_features() for training.
 This feature normalization is carried to avoid the biasing of any particular feature.
 The following are the number of the dataset:
@@ -99,26 +125,32 @@ And also shuffling the dataset before training.
 I am using 80:20 ratio train:test split-up.
 
 For classifier I am using Linear SVM from sklearn.svm library.
-The training is carried in cell no.
+The training is carried in cell no. 5
 The testing accuracy with the linear svm, I was able to achieve 99.2 % accuracy.
 
 The trained model & parameters for feature extraction are stored in pickle file.
-Same pickle is used at the time of car detection in the project video
+Same pickle is used at the time of car detection in the project video.
 
 ###Sliding Window Search
 
-The sliding window approach is used in cell no. in function find_cars().
-Following are the specifications of the sliding window:
-size: 64x64
-overlap: 1 cell = 8 pixels in both x and y direction
-region of interest: y_start = 380; y_end = 656
+The sliding window approach is used in cell no. 9 in function find_cars().
+Following are the specifications for the sliding window:
+Image scale factor = Downsize by 1.5
+Window size before scaling: 96x96
+Window size after scaling: 64x64
 
+overlap: 1 cell = 8 pixels in both x and y direction (After downscaling)
+region of interest: y_start = 385; y_end = 656
+
+The original image is downscaled by 1.5 times.
+A window size of 96x96 in the original image will be resized to 64x64 in the downscaled image.
 As the training images are of 64x64 resolution, I am using a sliding window of 64x64 resolution.
 By using small overlap, there is more chance of classifying of cars in the image.
 It also helps in detecting multiple windows for the same car which boosts the confidence of detected cars
 and helps in rejecting false positives.
 
-Following algorithm is executed ind find_cars() in cell no. :
+Following algorithm is executed in find_cars() in cell no. 9 :
+
 * Set window at the starting position in the region of interest
 * Extract the features (HOG, color histogram & spatial bin) for this window. Normalize the features and concatenate them.
 * Use the trained classifier to predict whether the window contains a car or not.
@@ -140,6 +172,8 @@ and reduced the false positive detection.
 
 Following is an example image of the detected windows in the test image.
 
+![alt text][image19] ![alt text][image13]
+![alt text][image20] ![alt text][image14]
 ###Heat Map
 As described in the lesson, heat map is generated for overlapping windows
 The heat map is calculated in the following manner:
@@ -152,7 +186,15 @@ The heat map is calculated in the following manner:
 * Based on labeled hot regions a tight bounding box is computed in draw_labeled_box()
 * Rendered the bounding box using the cv2.rectangle()
 
+The following show the heat map:
+
+![alt text][image13] ![alt text][image15]
+![alt text][image14] ![alt text][image16]
+
 The following images show the final bounding boxes detected for the test images
+
+![alt text][image15] ![alt text][image17]
+![alt text][image16] ![alt text][image18]
 
 ### Video Implementation
 Please find the uploaded output_video.mp4 which is detecting the cars in the video.
@@ -160,9 +202,22 @@ The pipelines in executed in process_image() in cell no. .
 
 ###Improvement Methods used
 With the above steps I was facing the following problems:
+
 * The bounding boxes in the output video where very jettery and wobbling accross frames.
 * There were a few false positives.
 
-To smooth out the bounding boxes, I used bounding boxes computed from the sliding window approach for the past 10 images and applied heat map approach for the current frame.
+To smooth out the bounding boxes, I used bounding boxes computed from the sliding window approach for the past 10 images and applied heat map approach for the current frame. I got this suggestion from this [blog post](http://jeremyshannon.com/2017/03/17/udacity-sdcnd-vehicle-detection.html)
+
+* No. of past frames = 15
+* Heat Map Threshold = 40
 This smoothened the bounding boxes accross frames.
-This also eliminated the false positives
+This also eliminated the false positives.
+
+### Discussion
+There is still scope for improvement. 
+For the initial few frames of the car coming into the frame, the bounding box is not shown. This is because the heat map threshold is kept high. Sliding windows of different sizes would detect more car or portions of car. This could help to get bounding boxes for the initial few frames into the frame.
+The classifier detects few false positives in the shadow region.
+The final bounding boxes could be a more tight.
+
+There could be issues with the pipeline where the another car is travelling at a very high speed as compared the our car.
+In that case the windows detected might be less and temporal heat map might result in not detecting the car properly
