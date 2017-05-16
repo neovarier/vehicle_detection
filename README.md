@@ -1,7 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
 
 **Vehicle Detection Project**
 
@@ -23,31 +19,39 @@ The goals / steps of this project are the following:
 [image6]: ./examples/YCrCb_3.png
 [image7]: ./examples/car.png
 [image8]: ./examples/car_resize.png
-[image9]: ./examples/spatial_bin.jpg
-[image10]: ./examples/color_histogram.jpg
+[image9]: ./examples/spatial_bin.png
+[image10]: ./examples/color_histogram.png
 [image11]: ./examples/HOG.png
 [image12]: ./examples/HOG_2.png
-[image13]: ./examples/window_1.png
-[image14]: ./examples/window_2.png
-[image15]: ./examples/heatmap_1.png
-[image16]: ./examples/heatmap_2.png
-[image17]: ./examples/label_1.png
-[image18]: ./examples/label_2.png
-[image19]: ./examples/test1.png
-[image20]: ./examples/test2.png
+[image13]: ./examples/HOG_3.png
+[image14]: ./examples/window_1.png
+[image15]: ./examples/window_2.png
+[image16]: ./examples/window_3.png
+[image17]: ./examples/window_4.png
+[image18]: ./examples/heatmap_1.png
+[image19]: ./examples/heatmap_2.png
+[image20]: ./examples/heatmap_3.png
+[image21]: ./examples/heatmap_4.png
+[image22]: ./examples/label_1.png
+[image23]: ./examples/label_2.png
+[image24]: ./examples/label_3.png
+[image25]: ./examples/label_4.png
+[image26]: ./examples/test1.png
+[image27]: ./examples/test2.png
+[image28]: ./examples/test3.png
+[image29]: ./examples/test4.png
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+###Writeup / README  
 
 I have referred the code provided in the lessons.
 
-###Feature experimentation: Histogram of Oriented Gradients (HOG) & Color Histogram
+###Feature experimentation: Histogram of Oriented Gradients (HOG) & Color Histogram.
+
 I read the vehicle and non-vehicle images.
 I explored the data set to get the following information:
 
@@ -62,7 +66,9 @@ The color space of YCrCb turned out to fairly separate out space for the car col
 The following images show the color space graph:
 
 ![alt text][image1] ![alt text][image2]
+
 ![alt text][image3] ![alt text][image4]
+
 ![alt text][image5] ![alt text][image6]
 
 I checked the color histogram of car and non-car images with YCrCb color space.
@@ -94,6 +100,8 @@ The following images show the HOG features of a few car images.
 ![alt text][image11]
 
 ![alt text][image12]
+
+![alt text][image13]
 
 I am using the following parameters for extracting hog features:
 orient = 9
@@ -172,8 +180,11 @@ and reduced the false positive detection.
 
 Following is an example image of the detected windows in the test image.
 
-![alt text][image19] ![alt text][image13]
-![alt text][image20] ![alt text][image14]
+![alt text][image26] ![alt text][image14]
+![alt text][image27] ![alt text][image15]
+![alt text][image28] ![alt text][image16]
+![alt text][image29] ![alt text][image17]
+
 ###Heat Map
 As described in the lesson, heat map is generated for overlapping windows
 The heat map is calculated in the following manner:
@@ -188,13 +199,17 @@ The heat map is calculated in the following manner:
 
 The following show the heat map:
 
-![alt text][image13] ![alt text][image15]
-![alt text][image14] ![alt text][image16]
+![alt text][image14] ![alt text][image18]
+![alt text][image15] ![alt text][image19]
+![alt text][image16] ![alt text][image20]
+![alt text][image17] ![alt text][image21]
 
 The following images show the final bounding boxes detected for the test images
 
-![alt text][image15] ![alt text][image17]
-![alt text][image16] ![alt text][image18]
+![alt text][image18] ![alt text][image22]
+![alt text][image19] ![alt text][image23]
+![alt text][image20] ![alt text][image24]
+![alt text][image21] ![alt text][image25]
 
 ### Video Implementation
 Please find the uploaded output_video.mp4 which is detecting the cars in the video.
@@ -212,6 +227,8 @@ To smooth out the bounding boxes, I used bounding boxes computed from the slidin
 * Heat Map Threshold = 40
 This smoothened the bounding boxes accross frames.
 This also eliminated the false positives.
+
+Here's a [link to my video result](./out_project.mp4)
 
 ### Discussion
 There is still scope for improvement. 
