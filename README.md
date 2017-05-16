@@ -135,6 +135,15 @@ The following features are extracted using a single function extract_features() 
 * Color Histogram
 * HOG feature
 
+Following are the parameters:
+
+* color_conv = 'RGB2YCrCb'
+* orient = 9  # HOG orientations
+* pix_per_cell = 8 # HOG pixels per cell
+* cell_per_block = 2 # HOG cells per block
+* spatial_size = (16, 16) # Spatial binning dimensions
+* hist_bins = 16
+
 Since each feature would be having different scales or range (max,min), I normalized them using StandardScaler library of sklearn.preprocessing.
 The normalization is covered in find_cars() for inference and extract_features() for training.
 This feature normalization is carried to avoid the biasing of any particular feature.
@@ -154,12 +163,12 @@ Same pickle is used at the time of car detection in the project video.
 
 The sliding window approach is used in cell no. 9 in function find_cars().
 Following are the specifications for the sliding window:
-Image scale factor = Downsize by 1.5
-Window size before scaling: 96x96
-Window size after scaling: 64x64
 
-overlap: 1 cell = 8 pixels in both x and y direction (After downscaling)
-region of interest: y_start = 385; y_end = 656
+* Image scale factor = Downsize by 1.5
+* Window size before scaling: 96x96
+* Window size after scaling: 64x64
+* overlap: 1 cell = 8 pixels in both x and y direction (After downscaling)
+* region of interest: y_start = 385; y_end = 656
 
 The original image is downscaled by 1.5 times.
 A window size of 96x96 in the original image will be equivalent to 64x64 in the downscaled image.
