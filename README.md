@@ -145,6 +145,10 @@ Following are the parameters:
 * spatial_size = (16, 16) # Spatial binning dimensions
 * hist_bins = 16
 
+It is observed that the YCrCb is a good fit for detecting cars. And Y channel which is the greyscale channel, would be able to capture the gradients/edges decently for cars. This should be giving good enough HOG features.
+Also for 64x64 image, cells of 8x8 pixels are small enough to capture the change in gradients of the car edges.
+No specific reason to choose 9 bins. Only thing kept in mind is that this would give equally spaced bins of 40 degrees between -180 to 180. Car shapes would exhibit specific sharp gradient edges and the 9 bin histogram should be able to give a signature for the car shape. With above set of features the car detection is working pretty decently.
+
 Since each feature would be having different scales or range (max,min), I normalized them using StandardScaler library of sklearn.preprocessing.
 The normalization is covered in find_cars() for inference and extract_features() for training.
 This feature normalization is carried to avoid the biasing of any particular feature.
