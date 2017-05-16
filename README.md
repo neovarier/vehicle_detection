@@ -70,7 +70,7 @@ I explored the data set to get the following information:
 I selected few images of each class for experimentation.
 
 I tried various color spaces to see which one differentiates the colors of the car from the non-cars.
-The color space of YCrCb turned out to fairly separate pockets of space for the car colors.
+The color space of YCrCb turned out to fairly separate pockets of space for the car colors. Also for non-car images the pixels are more scattered.
 The following images show the color space graph:
 
 ![alt text][image1] ![alt text][image2]
@@ -240,6 +240,7 @@ I got this suggestion from this [blog post](http://jeremyshannon.com/2017/03/17/
 
 * No. of past frames = 15
 * Heat Map Threshold = 40
+
 This smoothened the bounding boxes accross frames.
 This also eliminated the false positives. This also removed the detection of cars coming on the opposite lane
 
